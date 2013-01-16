@@ -113,8 +113,11 @@ public:
 
   parser_type operator()(const message_type& msg) const
   {
+    // Important: copy path to local
+    const string path(msg.request().path());
+      
     smatch what;
-    if(!regex_match(msg.request().path(), what, pattern_, match_single_line))
+    if(!regex_match(path, what, pattern_, match_single_line))
       return fail(msg, set_error);
 
     part v1;
